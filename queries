@@ -19,5 +19,80 @@
     GROUP BY r.location, s.Role
     ORDER BY r.location, num_swipes DESC;
 
-3) 
+3) Unresolved customer requests by deposit status
+    SELECT cr.depositStatus,
+      COUNT(*) AS open_requests,
+      COUNT(DISTINCT cr.customerId) AS affected_customers
+    FROM customer_requests AS cr
+    WHERE cr.resolved = 'N'
+    GROUP BY cr.depositStatus
+    ORDER BY open_requests DESC;
+
+4) Meeting-space utilization and expected attendance by space type
+    SELECT ms.spaceType,
+      COUNT(DISTINCT e.eventId) AS num_events,
+      SUM(e.estNoGuest) AS total_est_guests,
+      AVG(e.estNoGuest) AS avg_est_guests,
+      AVG(ms.capacity) AS avg_capacity
+    FROM event AS e
+    JOIN reservation AS rsv ON rsv.reservationId = e.reservationId
+    JOIN room AS rm ON rm.roomId = rsv.roomId
+    JOIN meeting_space AS ms ON ms.roomId = rm.roomId
+    GROUP BY ms.spaceType
+    ORDER BY num_events DESC;
+
+5) Daily room revenue
+    SELECT r.startDateTime,
+      SUM(r.totalRate) AS total_revenue,
+      COUNT(*) AS num_reservations
+    FROM reservation AS r
+    GROUP BY r.startDateTime
+    ORDER BY r.startDateTime;
+
+6) Meeting-space events by space type
+    SELECT ms.spaceType,
+      COUNT(*) AS num_events,
+      SUM(e.estNoGuest) AS total_est_guests
+    FROM meeting_space AS ms
+    JOIN room AS rm ON rm.roomId = ms.roomId
+    JOIN reservation  AS r ON r.roomId = rm.roomId
+    JOIN event AS e ON e.reservationId = r.reservationId
+    GROUP BY ms.spaceType
+    ORDER BY num_events DESC;
+
+7) Average room rate by building and room type
+    SELECT b.buildingName, rt.roomType,
+      AVG(r.totalRate) AS avg_rate,
+      COUNT(*) AS num_reservations
+    FROM building AS b
+    JOIN room AS rm ON rm.buildingId  = b.buildingId
+    JOIN room_type AS rt ON rt.roomTypeId  = rm.roomTypeId
+    JOIN reservation AS r ON r.roomId = rm.roomId
+    GROUP BY b.buildingName, rt.roomType
+    ORDER BY b.buildingName, rt.roomType;
+
+8) Rooms under renovation/reconstruction (do not sell)
+    SELECT r.room_id, rs.status, b.building_name, w.wing_name, f.floor_no
+    FROM room AS r
+    JOIN room_status AS rs ON rs.room_status_id = r.room_status_id
+    LEFT JOIN building AS b ON b.building_id = r.building_id
+    LEFT JOIN wing AS w ON w.wing_id = r.wing_id
+    LEFT JOIN floor AS fON f.floor_id = r.floor_id
+    WHERE rs.status IN ('renovation','reconstruction')
+    ORDER BY b.building_name, w.wing_name, f.floor_no, r.room_id;
+
+9) Adjacency map for combining rooms (planning movable walls)
+    SELECT a.room_id, a.adjacent_room_id
+    FROM adjacency AS a
+    JOIN room AS r1 ON r1.room_id = a.room_id
+    JOIN room AS r2 ON r2.room_id = a.adjacent_room_id
+    WHERE r1.room_type_id = (SELECT room_type_id FROM room_type WHERE room_type LIKE 'meeting%')
+      AND r2.room_type_id = (SELECT room_type_id FROM room_type WHERE room_type LIKE 'meeting%')
+    ORDER BY a.room_id, a.adjacent_room_id;
+
+
+    
+
+
+
 
