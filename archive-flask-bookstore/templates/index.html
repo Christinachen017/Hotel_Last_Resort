@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <div id="mainLeft">
+        <!-- Insert some welcome text here -->
+        <h1 class="welcomeText">Welcome to Laura's Reading Corner</h1>
+        <p class="welcomeText">Discover your next favorite book from our curated collection of bestsellers and hidden gems.</p>
+        <p class="welcomeText">Whether you're looking for fantasy adventures, sci-fi thrillers, captivating fiction, or heartwarming romance, we have something for every reader.</p>
+        <p class="welcomeText">Browse our categories below to explore our diverse selection of books, all carefully chosen to inspire and entertain.</p>
+    </div>
+    <div id='mainRight'>
+        <h1>Shop by category:</h1>
+        <div id='categorySelections'>
+            <!-- Create a for loop to iterate through the list of categories -->
+            {% for category in categories %}
+                {% set image_name = (category[1]|lower|replace(' ', '-')) ~ '.png' %}
+                <div class='category'>
+                    <a href="{{ url_for('category', categoryId=category[0]) }}">
+                        <img src="{{ url_for('static', filename='images/categories/' ~ image_name) }}" alt="{{ category[1] }} category">
+                    </a>
+                    <p><a href="{{ url_for('category', categoryId=category[0]) }}">{{ category[1] }}</a></p>
+                </div>
+            {%endfor%}
+
+        </div>
+    </div>
+</main>
+{% endblock %}
