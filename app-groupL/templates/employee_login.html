@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Last Resort - Employee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+        <nav>
+            <a href="{{ url_for('employee_login') }}">Staff Sign-In</a>
+        </nav>
+        <div class="userIcon">👤</div>
+    </header>
+    <main>
+        <div class="staffLoginBox">
+            <div class="bigIcon">👤</div>
+            <form class="staffLoginForm">
+                <div class="formField inline">
+                    <label>Username (ID#):</label>
+                    <input type="text">
+                </div>
+                <div class="formField inline">
+                    <label>Password:</label>
+                    <input type="password">
+                </div>
+                <a href="{{ url_for('employee_rooms') }}" class="btn">Login</a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('employee_rooms') }}">Overview</a>
+        <a href="{{ url_for('employee_room_list') }}">Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}">Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}">Customer Cards</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Unused Room Inventory</h2>
+    
+    <div class="pageDescription">
+        <p>Identify rooms that have never been reserved to understand inventory utilization and potential opportunities. These rooms may require special attention through marketing, pricing adjustments, or feature enhancements. Understanding why certain rooms remain unused can help improve overall inventory performance and revenue optimization.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('employee_room_list') }}" class="btn">Back to Room List</a>
+        <a href="{{ url_for('employee_rooms') }}" class="btn">Back to Overview</a>
+        <button class="btn" onclick="window.print()">Print Report</button>
+    </div>
+    
+    <h3>Rooms That Have Never Been Reserved</h3>
+    <p style="margin-bottom: 15px; color: #666;">This list identifies rooms that have not yet received any reservations. Consider reviewing these rooms for potential issues such as location, amenities, pricing, or marketing visibility. These rooms represent opportunities for revenue growth through targeted promotions or improvements.</p>
+    
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+        <p style="margin: 0;"><strong>Unused Rooms:</strong> {{ total_unused }} room{{ 's' if total_unused != 1 else '' }} have never been reserved. These represent potential revenue opportunities.</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Building Name</th>
+                <th>Room Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in rooms %}
+            <tr>
+                <td>{{ r.buildingName }}</td>
+                <td>{{ r.roomNumber }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="actionBtn">
+        <a href="{{ url_for('employee_room_list') }}" class="btn">Back to Room List</a>
+    </div>
+</div>
+{% endblock %}
+

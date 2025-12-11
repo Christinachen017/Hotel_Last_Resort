@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Last Resort - Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+        <nav>
+            <a href="{{ url_for('management_login') }}"><u>Staff Sign-In</u></a>
+        </nav>
+        <div class="userIcon">👤</div>
+    </header>
+    <main>
+        <div class="staffLoginPage">
+            <div class="bigAvatar">
+                <div class="avatarCircle">👤</div>
+            </div>
+            <div class="loginFields">
+                <div class="inlineField">
+                    <label>Username (ID#):</label>
+                    <input type="text">
+                </div>
+                <div class="inlineField">
+                    <label>Password:</label>
+                    <input type="password">
+                </div>
+            </div>
+            <a href="{{ url_for('staff_roster') }}" class="btn loginBtn">Login</a>
+        </div>
+    </main>
+</body>
+</html>

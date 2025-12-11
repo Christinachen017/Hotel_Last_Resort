@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="centerBox">
+    <h2>Error</h2>
+    <p class="errorMsg">{{ error }}</p>
+    <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+</div>
+{% endblock %}

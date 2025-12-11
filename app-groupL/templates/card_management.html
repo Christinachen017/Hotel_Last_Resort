@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('staff_roster') }}">Staff Roster</a>
+        <a href="{{ url_for('card_management') }}" class="active">Card Management</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Card Management & Access Analytics</h2>
+    
+    <div class="pageDescription">
+        <p>Monitor staff access patterns and card usage across different locations in the facility. This dashboard tracks door-reader swipes by department and location, helping you understand staff movement patterns, identify high-traffic areas, and ensure proper access control. Use this information to optimize security protocols and analyze facility usage.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <button class="btn" onclick="window.print()">Print Report</button>
+        <a href="{{ url_for('staff_roster') }}" class="btn">View Staff Roster</a>
+        <button class="btn" onclick="exportData()">Export Data</button>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Location</th>
+                <th>Staff Swipes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in staff_cards %}
+            <tr>
+                <td>{{ s.department }}</td>
+                <td>{{ s.location }}</td>
+                <td>{{ s.staff_swipes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="pageStats" style="margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 5px;">
+        <p><strong>Total Swipes Recorded:</strong> {{ total_swipes }}</p>
+        <p><strong>Departments Tracked:</strong> {{ departments }}</p>
+        <p><strong>Locations Monitored:</strong> {{ locations }}</p>
+    </div>
+    
+    <script>
+        function exportData() {
+            alert('Export functionality would be implemented here. This would generate a CSV or Excel file of the access data.');
+        }
+    </script>
+</div>
+{% endblock %}

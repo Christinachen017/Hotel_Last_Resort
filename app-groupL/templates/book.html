@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('guest_rooms') }}">Guest Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}">Meeting Spaces</a>
+        <a href="{{ url_for('my_reservations') }}">My Reservations</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Book a Room or Meeting Space</h2>
+    
+    <div class="pageDescription">
+        <p>Reserve your perfect accommodation or event space at Last Resort. Our easy-to-use booking system allows you to select from a variety of guest rooms and meeting spaces. Simply choose your preferred room type, select your check-in and check-out dates, and let us know about any special requests. We're here to make your reservation process smooth and convenient.</p>
+        <p style="margin-top: 10px;"><strong>Need assistance?</strong> Our team is available 24/7 to help you find the perfect space for your needs. Don't hesitate to include any special requirements in the notes section below.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('guest_rooms') }}" class="btn">View Available Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}" class="btn">View Meeting Spaces</a>
+        <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+    </div>
+    
+    <form class="bookingForm" action="{{ url_for('confirmation') }}">
+        <div class="formField">
+            <label>Select Room Type:</label>
+            <select name="room_type">
+                <optgroup label="Guest Rooms">
+                    {% for r in all_types %}
+                        {% if r.type_category == 'room' %}
+                        <option value="{{ r.roomType }}">{{ r.roomType }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </optgroup>
+                <optgroup label="Meeting Spaces">
+                    {% for r in all_types %}
+                        {% if r.type_category == 'meeting' %}
+                        <option value="{{ r.roomType }}">{{ r.roomType }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </optgroup>
+            </select>
+        </div>
+        <div class="formField">
+            <label>Check-in Date:</label>
+            <input type="date" name="checkin">
+        </div>
+        <div class="formField">
+            <label>Check-out Date:</label>
+            <input type="date" name="checkout">
+        </div>
+        <div class="formField">
+            <label>Special Requests:</label>
+            <textarea name="special_requests" rows="4" placeholder="Enter any special requests or requirements..."></textarea>
+        </div>
+        <button type="submit" class="btn">Book Now</button>
+    </form>
+</div>
+{% endblock %}

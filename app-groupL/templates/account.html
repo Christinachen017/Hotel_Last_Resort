@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="twoColumn">
+    <div class="leftCol">
+        <h1>Welcome!</h1>
+        <div class="pageDescription" style="margin-bottom: 20px;">
+            <p>Welcome to your account dashboard at Last Resort. Here you can view your billing history, manage your profile, and access all your account information in one convenient location.</p>
+        </div>
+        <p class="upcoming"><u>Customer Billing Summary</u></p>
+        <p style="margin: 10px 0; color: #666;">View detailed billing information and transaction history for all customers. This summary helps you track spending patterns and billing activity across your account.</p>
+        
+        <div class="actionBtn" style="margin-top: 20px;">
+            <a href="{{ url_for('profile') }}" class="btn">Manage my Profile</a>
+            <a href="{{ url_for('my_reservations') }}" class="btn">My Reservations</a>
+            <a href="{{ url_for('book') }}" class="btn">Book a Room</a>
+        </div>
+    </div>
+    
+    <div class="rightCol">
+        <h3>Revenue by Customer (Billing Totals)</h3>
+        <p style="margin-bottom: 15px; color: #666;">This table displays comprehensive billing information for all customers, showing total amounts billed and the number of bills per customer. Use this information to understand customer spending patterns and billing activity.</p>
+        <table class="dataTable">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Bills</th>
+                    <th>Total Billed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in reservations %}
+                <tr>
+                    <td>{{ r.customerId }}</td>
+                    <td>{{ r.last_name }}</td>
+                    <td>{{ r.first_name }}</td>
+                    <td>{{ r.bills }}</td>
+                    <td>${{ "%.2f"|format(r.total_billed) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

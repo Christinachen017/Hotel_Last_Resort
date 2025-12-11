@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('employee_rooms') }}">Overview</a>
+        <a href="{{ url_for('employee_room_list') }}">Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}">Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}" class="active">Customer Cards</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Customer Revenue Analysis</h2>
+    
+    <div class="pageDescription">
+        <p>Analyze customer spending patterns and identify top customers by revenue. This information is valuable for customer relationship management, loyalty program development, and targeted marketing efforts. Understanding which customers generate the most revenue helps prioritize service efforts and develop personalized offers.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('employee_rooms') }}" class="btn">Back to Overview</a>
+        <a href="{{ url_for('employee_reservations_page') }}" class="btn">View Reservations</a>
+        <button class="btn" onclick="window.print()">Print Report</button>
+    </div>
+    
+    <h3>Revenue by Customer (Billing Totals)</h3>
+    <p style="margin-bottom: 15px; color: #666;">This table ranks customers by their total billing amounts, showing both the number of bills and cumulative spending. High-value customers may be candidates for loyalty programs, special offers, or personalized service. Use this data to identify opportunities for upselling and relationship building.</p>
+    
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>Total Customers:</strong> {{ total_customers }} | <strong>Total Revenue:</strong> ${{ "%.2f"|format(total_revenue) }} | <strong>Average per Customer:</strong> ${{ "%.2f"|format(total_revenue / total_customers) if total_customers > 0 else 0 }}</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Bills</th>
+                <th>Total Billed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in customer_cards %}
+            <tr>
+                <td>{{ c.customerId }}</td>
+                <td>{{ c.last_name }}</td>
+                <td>{{ c.first_name }}</td>
+                <td>{{ c.bills }}</td>
+                <td>${{ "%.2f"|format(c.total_billed) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

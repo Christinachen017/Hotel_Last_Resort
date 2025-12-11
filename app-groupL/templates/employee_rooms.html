@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('employee_rooms') }}" class="active">Overview</a>
+        <a href="{{ url_for('employee_room_list') }}">Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}">Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}">Customer Cards</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Employee Dashboard - Overview</h2>
+    
+    <div class="pageDescription">
+        <p>Welcome to your employee dashboard. This overview page provides key insights into customer requests, room utilization patterns, and meeting space activity. Use this information to better serve guests and optimize operations. Monitor open customer requests to ensure timely responses, review stay patterns to understand guest preferences, and track meeting space usage for capacity planning.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('employee_room_list') }}" class="btn">View Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}" class="btn">View Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}" class="btn">Customer Cards</a>
+        <button class="btn" onclick="window.print()">Print Dashboard</button>
+    </div>
+    
+    <div class="pageStats" style="margin-bottom: 25px; padding: 15px; background-color: #f5f5f5; border-radius: 5px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; font-weight: bold; color: #2196F3;">{{ total_requests }}</p>
+            <p style="margin: 5px 0 0 0; color: #666;">Open Requests</p>
+        </div>
+        <div style="text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; font-weight: bold; color: #4CAF50;">{{ total_bookings }}</p>
+            <p style="margin: 5px 0 0 0; color: #666;">Total Bookings</p>
+        </div>
+        <div style="text-align: center;">
+            <p style="margin: 0; font-size: 1.2em; font-weight: bold; color: #FF9800;">{{ total_events }}</p>
+            <p style="margin: 5px 0 0 0; color: #666;">Meeting Events</p>
+        </div>
+    </div>
+    
+    <h3>Open Customer Requests by Request Type</h3>
+    <p style="margin-bottom: 15px; color: #666;">Track pending customer requests that require attention. This helps prioritize service tasks and ensure all guest needs are addressed promptly. Requests are grouped by deposit status to help identify patterns and streamline processing.</p>
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Deposit Status</th>
+                <th>Open Requests</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in forum_posts %}
+            <tr>
+                <td>{{ f.depositStatus if f.depositStatus else 'N/A' }}</td>
+                <td>{{ f.open_requests }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Average Stay Length by Room Type</h3>
+    <p style="margin-bottom: 15px; color: #666;">Analyze guest stay patterns to understand which room types are most popular for extended stays. This data helps with pricing strategies, inventory management, and marketing efforts. Rooms with longer average stays may indicate higher guest satisfaction or better value perception.</p>
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Room Type</th>
+                <th>Average Nights</th>
+                <th>Number of Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in room_types %}
+            <tr>
+                <td>{{ r.roomType }}</td>
+                <td>{{ "%.1f"|format(r.avg_nights) }}</td>
+                <td>{{ r.num_room_bookings }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h3>Meeting-Space Events by Space Type</h3>
+    <p style="margin-bottom: 15px; color: #666;">Monitor meeting space utilization across different venue types. This information helps identify which spaces are most in demand, plan maintenance schedules, and optimize space allocation for future events. High event counts may indicate popular spaces that could benefit from additional similar venues.</p>
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Space Type</th>
+                <th>Events Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in meeting_spaces_events %}
+            <tr>
+                <td>{{ m.spaceType }}</td>
+                <td>{{ m.events_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

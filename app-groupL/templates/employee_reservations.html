@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('employee_rooms') }}">Overview</a>
+        <a href="{{ url_for('employee_room_list') }}">Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}" class="active">Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}">Customer Cards</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Reservation Analytics</h2>
+    
+    <div class="pageDescription">
+        <p>Track daily reservation patterns to understand booking trends and peak periods. This data is essential for staffing decisions, inventory management, and identifying busy periods that may require additional resources. Analyzing reservation patterns helps optimize operations and improve guest service during high-demand periods.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('employee_revenue') }}" class="btn">View Monthly Revenue</a>
+        <a href="{{ url_for('employee_room_list') }}" class="btn">View Room List</a>
+        <a href="{{ url_for('employee_rooms') }}" class="btn">Back to Overview</a>
+    </div>
+    
+    <h3>Reservations per Day (by Check-in Date)</h3>
+    <p style="margin-bottom: 15px; color: #666;">Daily reservation counts help identify trends, peak booking days, and seasonal patterns. Use this information to anticipate staffing needs, plan maintenance windows, and optimize pricing strategies. Days with high reservation counts may require additional front desk and housekeeping staff.</p>
+    
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>Total Reservations:</strong> {{ total_reservations }} | <strong>Days Tracked:</strong> {{ total_days }} | <strong>Average per Day:</strong> {{ "%.1f"|format(avg_per_day) }}</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Number of Reservations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+            <tr>
+                <td>{{ r.day }}</td>
+                <td>{{ r.num_reservations }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="actionBtn" style="margin-top: 20px;">
+        <a href="{{ url_for('employee_revenue') }}" class="btn">View Monthly Revenue</a>
+        <button class="btn" onclick="window.print()">Print Report</button>
+    </div>
+</div>
+{% endblock %}

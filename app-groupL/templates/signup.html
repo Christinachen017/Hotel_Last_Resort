@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="signupPage">
+    <h2>Create Your Account</h2>
+    
+    <div class="pageDescription" style="margin-bottom: 20px;">
+        <p>Join Last Resort and start planning your perfect stay. Creating an account gives you access to exclusive benefits, faster booking, reservation management, and personalized service. It only takes a minute to get started!</p>
+        <p style="margin-top: 10px;"><strong>Benefits of creating an account:</strong></p>
+        <ul style="margin: 10px 0; padding-left: 20px; color: #666;">
+            <li>Quick and easy booking process</li>
+            <li>Access to your reservation history</li>
+            <li>Special offers and promotions</li>
+            <li>Faster check-in and checkout</li>
+        </ul>
+    </div>
+    
+    <div class="signupBox">
+        <form>
+            <div class="formField">
+                <label>Name:</label>
+                <input type="text">
+            </div>
+            <div class="formField">
+                <label>What is your purpose when booking a room? (Holiday/Business Trip/Events/...)</label>
+                <input type="text">
+            </div>
+            <div class="formField">
+                <label>Email:</label>
+                <input type="email">
+            </div>
+            <div class="formField">
+                <label>Phone Number:</label>
+                <input type="text">
+            </div>
+            <div class="formField">
+                <label>Username:</label>
+                <input type="text">
+            </div>
+            <div class="formField">
+                <label>Password:</label>
+                <input type="password">
+            </div>
+            <div class="formField">
+                <label>Re-enter Password:</label>
+                <input type="password">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

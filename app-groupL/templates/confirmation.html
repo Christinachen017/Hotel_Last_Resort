@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('guest_rooms') }}">Guest Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}">Meeting Spaces</a>
+        <a href="{{ url_for('my_reservations') }}" class="active"><u>My Reservations</u></a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="confirmPage">
+    <h2>Reservation Confirmed!</h2>
+    
+    <div class="pageDescription" style="margin-bottom: 20px; padding: 15px; background-color: #d4edda; border-left: 4px solid #28a745; border-radius: 4px;">
+        <p style="margin: 0;"><strong>Your reservation has been successfully confirmed!</strong> We're excited to host you at Last Resort. A confirmation email with all the details has been sent to your registered email address. Please review your reservation details below and contact us if you have any questions or special requests.</p>
+    </div>
+    
+    <p class="orderNum">Order Number: #5BS027PMG</p>
+    <p style="margin-bottom: 20px; color: #666;">Please save this order number for your records. You'll need it for any inquiries or modifications to your reservation.</p>
+    
+    <div class="orderBox">
+        <h3>Order Summary</h3>
+        <p style="margin-bottom: 15px; color: #666; font-size: 0.9em;">Review your reservation details below. All information is accurate as of the time of booking.</p>
+        <div class="orderContent">
+            <p>Check-in Date: Nov.8th</p>
+            <p>Check-Out Date: Nov.10th</p>
+            <p>Room Type: Garden View King Room</p>
+            <p>Charged Amount (USD): $ 426.78</p>
+            <p>Billing Address: 360 E 7th St, New York City, NY 10012</p>
+            <p>Contact: Jessica</p>
+        </div>
+    </div>
+    
+    <div class="actionBtn" style="margin-top: 30px;">
+        <a href="{{ url_for('my_reservations') }}" class="btn">View All Reservations</a>
+        <a href="{{ url_for('book') }}" class="btn">Make Another Reservation</a>
+        <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+        <h3 style="margin-top: 0;">What's Next?</h3>
+        <ul style="color: #666; line-height: 1.8;">
+            <li>Check your email for a detailed confirmation message</li>
+            <li>Review your reservation details and contact information</li>
+            <li>Add any special requests or questions using the link below</li>
+            <li>Plan your arrival - check-in time is 3:00 PM</li>
+        </ul>
+        <p class="link" style="margin-top: 15px;"><a href="#"><u>Special Requests?/Questions?</u></a></p>
+    </div>
+</div>
+{% endblock %}

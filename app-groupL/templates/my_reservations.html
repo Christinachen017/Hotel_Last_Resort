@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('guest_rooms') }}">Guest Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}">Meeting Spaces</a>
+        <a href="{{ url_for('my_reservations') }}" class="active">My Reservations</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>My Reservations</h2>
+    
+    <div class="pageDescription">
+        <p>View your recent reservation history and upcoming bookings. This page displays your check-in dates and reservation details, helping you keep track of your stays at Last Resort. You can see the most recent 10 reservations below.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Make New Reservation</a>
+        <a href="{{ url_for('guest_rooms') }}" class="btn">Browse Rooms</a>
+        <a href="{{ url_for('account') }}" class="btn">My Account</a>
+    </div>
+    
+    {% if reservations %}
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>📅 Showing:</strong> {{ total_reservations }} most recent reservations</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Check-in Date</th>
+                <th>Number of Reservations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+            <tr>
+                <td><strong>{{ r.day }}</strong></td>
+                <td>{{ r.num_reservations }} reservation{{ 's' if r.num_reservations != 1 else '' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="infoBox" style="margin: 20px 0; padding: 20px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+        <p style="margin: 0;"><strong>📋 No reservations found.</strong> Start planning your stay by booking a room or meeting space!</p>
+    </div>
+    {% endif %}
+    
+    <div class="actionBtn" style="margin-top: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Book Now</a>
+        <a href="{{ url_for('profile') }}" class="btn">Update Profile</a>
+    </div>
+</div>
+{% endblock %}

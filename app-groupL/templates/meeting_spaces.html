@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('guest_rooms') }}">Guest Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}" class="active">Meeting Spaces</a>
+        <a href="{{ url_for('my_reservations') }}">My Reservations</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Meeting Spaces & Event Venues</h2>
+    
+    <div class="pageDescription">
+        <p>Host your next business meeting, conference, or special event in our professionally equipped meeting spaces. Our versatile venues accommodate groups of all sizes and come with state-of-the-art technology and amenities. From intimate boardrooms to spacious banquet halls, we have the perfect space for your event.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Book a Meeting Space</a>
+        <a href="{{ url_for('guest_rooms') }}" class="btn">View Guest Rooms</a>
+        <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+    </div>
+    
+    {% if meeting_spaces %}
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>🏢 Available Spaces:</strong> {{ total_spaces }} meeting spaces ready for booking</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Building</th>
+                <th>Space Type</th>
+                <th>Capacity</th>
+                <th>Projector</th>
+                <th>Whiteboard</th>
+                <th>Paid Bar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in meeting_spaces %}
+            <tr>
+                <td><strong>{{ m.roomNumber }}</strong></td>
+                <td>{{ m.buildingName }}</td>
+                <td>{{ m.spaceType }}</td>
+                <td>{{ m.capacity }} people</td>
+                <td>{{ 'Yes' if m.hasProjector else 'No' }}</td>
+                <td>{{ 'Yes' if m.hasWhiteboard else 'No' }}</td>
+                <td>{{ 'Yes' if m.hasPaidBar else 'No' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="infoBox" style="margin: 20px 0; padding: 20px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+        <p style="margin: 0;"><strong>⚠️ No meeting spaces available at this time.</strong> Please check back later or contact us for assistance.</p>
+    </div>
+    {% endif %}
+    
+    <div class="actionBtn" style="margin-top: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Reserve a Meeting Space</a>
+    </div>
+</div>
+{% endblock %}

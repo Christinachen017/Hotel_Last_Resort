@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('employee_rooms') }}">Overview</a>
+        <a href="{{ url_for('employee_room_list') }}" class="active">Room List</a>
+        <a href="{{ url_for('employee_reservations_page') }}">Reservations</a>
+        <a href="{{ url_for('employee_customer_cards') }}">Customer Cards</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Room Inventory Management</h2>
+    
+    <div class="pageDescription">
+        <p>Monitor room availability and status across all buildings in the resort. This comprehensive inventory view helps you track which rooms are available for booking, currently occupied, or under maintenance. Use this information to manage room assignments, plan maintenance schedules, and ensure optimal room utilization across the property.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('rooms_never_reserved') }}" class="btn">View Rooms Never Reserved</a>
+        <a href="{{ url_for('employee_rooms') }}" class="btn">Back to Overview</a>
+        <a href="{{ url_for('employee_reservations_page') }}" class="btn">View Reservations</a>
+    </div>
+    
+    <h3>Room Counts by Status for Each Building</h3>
+    <p style="margin-bottom: 15px; color: #666;">This breakdown shows the distribution of rooms by status (available, occupied, maintenance) for each building. Understanding room status distribution helps with capacity planning, identifying maintenance needs, and optimizing guest room assignments.</p>
+    
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>Total Rooms:</strong> {{ total_rooms }} | <strong>Available:</strong> {{ available_rooms }} | <strong>Occupancy Rate:</strong> {{ "%.1f"|format((total_rooms - available_rooms) / total_rooms * 100) if total_rooms > 0 else 0 }}%</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Building Name</th>
+                <th>Room Status</th>
+                <th>Number of Rooms</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in rooms %}
+            <tr>
+                <td>{{ r.buildingName }}</td>
+                <td>{{ r.room_status }}</td>
+                <td>{{ r.num_rooms }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="actionBtn" style="margin-top: 20px;">
+        <a href="{{ url_for('rooms_never_reserved') }}" class="btn">View Rooms Never Reserved</a>
+        <button class="btn" onclick="window.print()">Print Report</button>
+    </div>
+</div>
+{% endblock %}

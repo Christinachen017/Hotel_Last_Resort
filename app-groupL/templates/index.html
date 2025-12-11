@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="homePage">
+    <div class="welcomeSection">
+        <h1>Welcome to Last Resort</h1>
+        <p class="tagline">Your perfect getaway destination. Start your journey right now with a single click.</p>
+        <div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+            <p style="margin-bottom: 15px;">At Last Resort, we pride ourselves on providing exceptional hospitality and world-class accommodations. Whether you're planning a relaxing vacation, a business trip, or hosting an important event, we have the perfect space for you.</p>
+            <p style="margin-bottom: 15px;">Our resort features beautifully appointed guest rooms with modern amenities, state-of-the-art meeting spaces for your business needs, and a dedicated team committed to making your stay memorable. Explore our facilities, check availability, and book your reservation all in one convenient place.</p>
+            <p style="margin: 0;"><strong>Ready to get started?</strong> Browse our available rooms and meeting spaces, or use our quick booking system to reserve your stay today.</p>
+        </div>
+    </div>
+    
+    <div class="mainOptions threeCol">
+        <a href="{{ url_for('guest_rooms') }}" class="optionCard">
+            <div class="optionIcon">🛏️</div>
+            <h2>Guest Rooms</h2>
+            <p>Explore our comfortable guest rooms with various amenities</p>
+            <span class="optionBtn">View Rooms →</span>
+        </a>
+        
+        <a href="{{ url_for('meeting_spaces_page') }}" class="optionCard">
+            <div class="optionIcon">🏢</div>
+            <h2>Meeting Spaces</h2>
+            <p>Book conference halls and meeting rooms for your events</p>
+            <span class="optionBtn">View Spaces →</span>
+        </a>
+        
+        <a href="{{ url_for('book') }}" class="optionCard">
+            <div class="optionIcon">📅</div>
+            <h2>Book a Room</h2>
+            <p>Make a reservation with our easy booking system</p>
+            <span class="optionBtn">Book Now →</span>
+        </a>
+    </div>
+    
+    <div class="mainOptions twoCol staffSection">
+        <a href="{{ url_for('management_login') }}" class="optionCard">
+            <div class="optionIcon">👔</div>
+            <h2>Management</h2>
+            <p>Staff roster and card management for administrators</p>
+            <span class="optionBtn">Admin Login →</span>
+        </a>
+        
+        <a href="{{ url_for('employee_login') }}" class="optionCard">
+            <div class="optionIcon">🪪</div>
+            <h2>Employee Portal</h2>
+            <p>Employee tools, room lists, and reservations</p>
+            <span class="optionBtn">Employee Login →</span>
+        </a>
+    </div>
+    
+    <div class="twoColumn loginSection">
+        <div class="leftCol">
+            <div class="quickLinks">
+                <h3>Quick Links</h3>
+                <a href="{{ url_for('my_reservations') }}" class="quickLink">📋 My Reservations</a>
+                <a href="{{ url_for('account') }}" class="quickLink">👤 My Account</a>
+                <a href="{{ url_for('profile') }}" class="quickLink">⚙️ Manage Profile</a>
+            </div>
+        </div>
+        
+        <div class="rightCol">
+            <p class="rightTitle">Already have an account? Log in here.</p>
+            
+            <form class="loginForm" action="{{ url_for('account') }}">
+                <div class="formField inline2">
+                    <label>Username:</label>
+                    <input type="text">
+                </div>
+                <div class="formField inline2">
+                    <label>Password:</label>
+                    <input type="password">
+                </div>
+                <p class="link small"><a href="#">Forgot Password?</a></p>
+                <p class="link small"><a href="{{ url_for('signup') }}">Create Account</a></p>
+                <button type="submit" class="btn">Log In</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

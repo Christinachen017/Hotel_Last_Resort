@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header>
+    <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+    <nav>
+        <a href="{{ url_for('guest_rooms') }}" class="active">Guest Rooms</a>
+        <a href="{{ url_for('meeting_spaces_page') }}">Meeting Spaces</a>
+        <a href="{{ url_for('my_reservations') }}">My Reservations</a>
+    </nav>
+    <div class="userIcon">👤</div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="pageContent">
+    <h2>Available Guest Rooms</h2>
+    
+    <div class="pageDescription">
+        <p>Discover our comfortable and well-appointed guest rooms designed for your relaxation and comfort. Each room is thoughtfully equipped with modern amenities and features to ensure a memorable stay. Browse through our available accommodations below and find the perfect room for your needs.</p>
+    </div>
+    
+    <div class="actionBtn" style="margin-bottom: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Book a Room Now</a>
+        <a href="{{ url_for('meeting_spaces_page') }}" class="btn">View Meeting Spaces</a>
+        <a href="{{ url_for('home') }}" class="btn">Back to Home</a>
+    </div>
+    
+    {% if available_rooms %}
+    <div class="infoBox" style="margin-bottom: 15px; padding: 12px; background-color: #e8f4f8; border-left: 4px solid #2196F3; border-radius: 4px;">
+        <p style="margin: 0;"><strong>📊 Available Rooms:</strong> {{ total_rooms }} rooms ready for booking</p>
+    </div>
+    
+    <table class="dataTable">
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Building</th>
+                <th>Room Type</th>
+                <th>Bed Type</th>
+                <th>Size (sq ft)</th>
+                <th>Paid Bar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in available_rooms %}
+            <tr>
+                <td><strong>{{ room.roomNumber }}</strong></td>
+                <td>{{ room.buildingName }}</td>
+                <td>{{ room.roomType }}</td>
+                <td>{{ room.bedType if room.bedType else 'N/A' }}</td>
+                <td>{{ "%.0f"|format(room.squareFootage) if room.squareFootage else 'N/A' }}</td>
+                <td>{{ 'Yes' if room.hasPaidBar else 'No' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="infoBox" style="margin: 20px 0; padding: 20px; background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px;">
+        <p style="margin: 0;"><strong>⚠️ No rooms available at this time.</strong> Please check back later or contact us for assistance.</p>
+    </div>
+    {% endif %}
+    
+    <div class="actionBtn" style="margin-top: 20px;">
+        <a href="{{ url_for('book') }}" class="btn">Reserve Your Room</a>
+    </div>
+</div>
+{% endblock %}

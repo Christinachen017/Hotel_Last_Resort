@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Last Resort</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    {% block header %}
+    <header>
+        <div class="logo"><a href="{{ url_for('home') }}">Last Resort</a></div>
+        <nav>
+            <a href="{{ url_for('guest_rooms') }}">Guest Rooms</a>
+            <a href="{{ url_for('meeting_spaces_page') }}">Meeting Spaces</a>
+            <a href="{{ url_for('book') }}">Book a Room</a>
+            <a href="{{ url_for('my_reservations') }}">My Reservations</a>
+        </nav>
+        <div class="headerRight">
+            <a href="{{ url_for('account') }}" class="userIcon">👤</a>
+        </div>
+    </header>
+    {% endblock %}
+    <main>{% block content %}{% endblock %}</main>
+</body>
+</html>
